@@ -1,0 +1,26 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: chai-aur-redis
+    ports:
+      - "6379:6379" #redis port
+    command: ["redis-server", "--appendonly", "yes"] # Set a password for Redis
+    volumes:
+      - redis_data:/data
+
+  mongo:
+      image: mongo:7.0
+      container_name: chai-aur-mongo
+      ports:
+        - "27017:27017" #mongodb port
+      environment:
+        MONGO_INITDB_DATABASE: chai_aur_redis
+      volumes:
+        - mongo_data:/data/db
+
+volumes:
+  redis_data:
+  mongo_data:
+
+
+#start services : docker compose up  
